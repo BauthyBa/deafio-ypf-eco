@@ -17,3 +17,5 @@ CREATE TABLE IF NOT EXISTS mediciones (
 conn.commit()
 conn.close()
 
+
+# Este archivo es solo para crear una base de dato chica, solo estaba probando.

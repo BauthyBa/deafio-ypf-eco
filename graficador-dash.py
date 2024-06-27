@@ -6,18 +6,15 @@ from sqlalchemy import create_engine
 import plotly.express as px
 import time
 
-# Conexión a la base de datos MySQL
-engine = create_engine('mysql+pymysql://root:Bautista?2006@localhost/mediciones')
+engine = create_engine('mysql+pymysql://user:password@localhost/(nombre de la base de datos)') # Esta linea la tienen que completar con sus datos.
 
-# Consulta de datos
 def cargar_datos():
-    query = "SELECT * FROM mediciones_auto"
+    query = "SELECT * FROM (nombre de la base de datos)" #Aca tambien tienen que cambiar el nombre de la base de datos.
     df = pd.read_sql(query, engine)
     return df
 
 app = dash.Dash(__name__)
 
-# Definir la plantilla HTML
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -49,7 +46,7 @@ app.layout = html.Div([
     dcc.Graph(id='grafico-lineas'),
     dcc.Interval(
         id='interval-component',
-        interval=60*100,  # en milisegundos, actualiza cada 1 minuto
+        interval=60*100,  # Esto es para que la pagina se actualiza cada 10 segundos.
         n_intervals=0
     )
 ])
@@ -60,8 +57,8 @@ app.layout = html.Div([
     Input('interval-component', 'n_intervals')
 )
 def actualizar_graficos(n):
-    df = cargar_datos()  # Cargar datos actualizados de la base de datos
-    fig_barras = px.bar(df, x='voltaje', y='velocidad', title='Ejemplo de Datos en Barra')
+    df = cargar_datos()  
+    fig_barras = px.bar(df, x='voltaje', y='velocidad', title='Ejemplo de Datos en Barra')            # En el caso de que su base de dato tenga nombres diferentes aca tambien tiene que cambier los valores de x e y.
     fig_lineas = px.line(df, x='fecha', y='tiempo', title='Ejemplo de datos en Grafico de Linea', markers=True)
     return fig_barras, fig_lineas
 

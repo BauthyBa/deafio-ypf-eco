@@ -6,17 +6,15 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Conexión a la base de datos MySQL
-engine = create_engine('mysql+pymysql://root:Bautista?2006@localhost/mediciones')
+engine = create_engine('mysql+pymysql://user:password@localhost/(nombre de la base de datos)') # Esta linea la tienen que completar con sus datos.
 
-# Consulta de datos
-query = "SELECT * FROM mediciones_auto"
+query = "SELECT * FROM (nombre de la base de datos)" #Aca tambien tienen que cambiar el nombre de la base de datos.
 df = pd.read_sql(query, engine)
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Visualización de Datos con PyQt")
+        self.setWindowTitle("Visualizacion de Datos con PyQt")
 
         self.layout = QVBoxLayout()
 
@@ -38,7 +36,7 @@ class VentanaPrincipal(QMainWindow):
         ax1 = self.canvas.figure.add_subplot(211)
         sns.barplot(x='velocidad', y='voltaje', data=df, ax=ax1)
         ax1.set_title('Ejemplo de grafico de barras')
-
+                                                                        #En esatas dos formas de graficar cambien los datos segun su BD.
         # Grafico de lineas
         ax2 = self.canvas.figure.add_subplot(212)
         sns.lineplot(x='tiempo', y='fecha', data=df, marker='o', ax=ax2)
