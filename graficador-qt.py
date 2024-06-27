@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Conexión a la base de datos MySQL
-engine = create_engine('mysql+pymysql://root:Bautista?2006@localhost/ejemplo_db')
+engine = create_engine('mysql+pymysql://root:Bautista?2006@localhost/mediciones')
 
 # Consulta de datos
-query = "SELECT * FROM ventas"
+query = "SELECT * FROM mediciones_auto"
 df = pd.read_sql(query, engine)
 
 class VentanaPrincipal(QMainWindow):
@@ -34,15 +34,15 @@ class VentanaPrincipal(QMainWindow):
     def mostrar_graficos(self):
         self.canvas.figure.clear()
 
-        # Gráfico de barras
+        # Grafico de barras
         ax1 = self.canvas.figure.add_subplot(211)
-        sns.barplot(x='producto', y='cantidad', data=df, ax=ax1)
-        ax1.set_title('Cantidad de Productos Vendidos')
+        sns.barplot(x='velocidad', y='voltaje', data=df, ax=ax1)
+        ax1.set_title('Ejemplo de grafico de barras')
 
-        # Gráfico de líneas
+        # Grafico de lineas
         ax2 = self.canvas.figure.add_subplot(212)
-        sns.lineplot(x='fecha', y='precio', data=df, marker='o', ax=ax2)
-        ax2.set_title('Precio de Ventas por Fecha')
+        sns.lineplot(x='tiempo', y='fecha', data=df, marker='o', ax=ax2)
+        ax2.set_title('Ejemplo de grafico de linea')
 
         self.canvas.draw()
 
